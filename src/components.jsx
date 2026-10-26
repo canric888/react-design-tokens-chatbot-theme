@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import posthog from './posthog.js';
 
 export function Button({ variant = 'primary', type = 'button', children, ...props }) {
   return <button type={type} className={`button button--${variant}`} {...props}>{children}</button>;
@@ -20,6 +21,7 @@ export function Composer({ onSend }) {
   function submit(event) {
     event.preventDefault();
     if (!draft.trim()) return;
+    posthog?.capture('chat_question_submitted');
     onSend(draft.trim());
     setDraft('');
   }
